@@ -8,6 +8,10 @@ Analyze and rate YouTube playlist comments with real-time sentiment analysis. Th
 - **Dynamic Rating System**: Calculates an average sentiment rating (1 to 10) based on comments and visualizes it with emoji reactions.
 - **Interactive UI**: Displays an engaging star rating component using Tailwind CSS, with stars filled based on the calculated sentiment score.
 
+## 📌 Screenshots:
+![Screenshot (174)](https://github.com/user-attachments/assets/14360c59-0523-41ad-a056-c290c456a6d6)
+
+
 ## 📁 Project Structure
 - **Backend**: Django framework for managing data processing and serving analysis results.
 - **Frontend**: Tailwind CSS for styling, with a rating display that dynamically reflects sentiment scores.
