@@ -1,0 +1,133 @@
+<!-- myapp/templates/myapp/analyze.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyze YouTube Comments</title>
+     
+   
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/emoji.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+     
+
+    <!-- <form method="POST">
+        <div class="Wrapper">
+            <h1 class="Title">CSS Only Floated Labels!</h1>
+            <div class="Input">
+              <input type="text" id="input" class="Input-text" placeholder="Enter Your Link">
+              <label for="input" class="Input-label">First name</label>
+            </div>
+          </div>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Analyze</button>
+    </form> -->
+
+    <form method="POST">
+        <div class="Wrapper">
+            <h1 class="Title">Analyze YouTube Playlist using comments</h1>
+            
+            <!-- Custom input for YouTube link -->
+            <div class="Input">
+                <label for="youtube-link" class="Input-label">YouTube Link</label>
+            </div>
+            
+            {% csrf_token %}
+            
+            <!-- Custom rendering of each Django form field -->
+            {% for field in form %}
+                <div class="Input">
+                    <input type="{{ field.field.widget.input_type }}" id="{{ field.id_for_label }}" name="{{ field.name }}" class="Input-text" placeholder="{{ field.label }}" value="{{ field.value|default:'' }}">
+                    <label for="{{ field.id_for_label }}" class="Input-label">{{ field.label }}</label>
+                </div>
+            {% endfor %}
+            
+            <button type="submit">Analyze</button>
+        </div>
+    </form>
+
+    {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+
+    {% if results %}
+        <h2>Average Sentiment: {{ results.0|floatformat:2  }}</h2>
+        <h2>Average Rating(1 to 10): {{ results.1|floatformat:0 }}</h2>
+        
+
+        <h1>Reaction : </h1>
+        <!-- Emoji Display based on rating -->
+        <div class="container" style="display:flex">
+            
+            <div class="wrapper">
+                {% if results.1 <= 2 %}
+                <div class="emoji sad">
+                    <figure class="face">
+                      <span class="eyes">
+                        <span class="eye"></span>
+                        <span class="eye"></span>
+                      </span>
+                      <span class="mouth tounge">
+                      </span>
+                    </figure>
+                  </div>
+                {% elif results.1 <= 4 %}
+                <div class="emoji shocked">
+                    <figure class="face">
+                      <span class="eyes">
+                        <span class="eye"></span>
+                        <span class="eye"></span>
+                      </span>
+                      <span class="mouth">
+                      </span>
+                    </figure>
+                  </div>
+                {% elif results.1 <= 6 %}
+                <div class="emoji speechless">
+                    <figure class="face">
+                      <span class="eyes">
+                        <span class="eye"></span>
+                        <span class="eye"></span>
+                      </span>
+                      <span class="mouth">
+                      </span>
+                    </figure>
+                  </div>
+                {% elif results.1 <= 8 %}
+                <div class="emoji smile">
+                    <figure class="face">
+                      <span class="eyes">
+                        <span class="eye"></span>
+                        <span class="eye"></span>
+                      </span>
+                      <span class="mouth">
+                      </span>
+                    </figure>
+                  </div>
+                {% else %}
+                <div class="emoji love">
+                    <figure class="face">
+                      <span class="eyes">
+                        <span class="heart-eye">
+                          <span class="heart"></span>
+                        </span>
+                        <span class="heart-eye">
+                          <span class="heart"></span>
+                        </span>
+                      </span>
+                      <span class="mouth tounge">
+                      </span>
+                    </figure>
+                  </div>
+                {% endif %}
+            </div>
+        </div>
+    {% else %}
+        <p>No results to display.</p>
+    {% endif %}
+</body>
+</html>

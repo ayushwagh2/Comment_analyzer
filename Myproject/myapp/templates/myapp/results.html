@@ -1,0 +1,45 @@
+<!-- myapp/templates/myapp/results.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comment Analysis Results</title>
+</head>
+<body>
+    <h1>Comment Analysis Results</h1>
+
+    {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+
+    {% if results %}
+        <h2>Average Sentiment: {{ results.0 }}</h2>
+        <h2>Average Rating: {{ results.1 }}</h2>
+
+        <h3>Comments:</h3>
+        <table border="1">
+            <tr>
+                <th>Timestamp</th>
+                <th>Username</th>
+                <th>Video ID</th>
+                <th>Comment</th>
+                <th>Date</th>
+            </tr>
+            {% for comment in results.2.values %}
+                <tr>
+                    <td>{{ comment.Timestamp }}</td>
+                    <td>{{ comment.Username }}</td>
+                    <td>{{ comment.VideoID }}</td>
+                    <td>{{ comment.Comment }}</td>
+                    <td>{{ comment.Date }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No results to display.</p>
+    {% endif %}
+
+    <a href="{% url 'analyze_playlist_comments' %}">Analyze Another Playlist</a>
+</body>
+</html>
